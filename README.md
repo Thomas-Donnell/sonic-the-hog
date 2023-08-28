@@ -1,3 +1,3 @@
 # sonic-the-hog
 
-![Clone]{images/cloneRepo.png}
+![Clone](images/cloneRepo.png)
