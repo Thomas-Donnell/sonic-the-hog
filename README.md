@@ -6,3 +6,5 @@ Sonic The Hedge Hog
 
 #### To Clone the repo first open **Visual Studio** then click clone repository in the file tab. From there you can select GitHub (Enter your Credentials), then paste the URL from this repo. <br /> The location where you save the clone doesn't matter but I prefer **(user/source/repos)**
 ![Clone](images/cloneRepo.png)
+
+![unity](images/unityProject.png)
