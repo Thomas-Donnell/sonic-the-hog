@@ -10,6 +10,7 @@ public class sample : MonoBehaviour
         Debug.Log("hello world");
         Debug.Log("hello world");
         Debug.Log("hello world");
+        Debug.Log("Hello test");
         Debug.Log("Test2");
     }
 
