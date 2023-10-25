@@ -19,7 +19,7 @@ public class MovingPlatform : MonoBehaviour
         SetTarget(endPoint.position);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         // Move the platform towards the target
         platform.position = Vector2.MoveTowards(platform.position, currentTarget, speed * Time.deltaTime);
@@ -66,4 +66,6 @@ public class MovingPlatform : MonoBehaviour
             Gizmos.DrawLine(platform.position, endPoint.position);
         }
     }
+
+
 }
