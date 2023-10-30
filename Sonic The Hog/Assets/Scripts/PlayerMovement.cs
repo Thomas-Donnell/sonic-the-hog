@@ -5,7 +5,10 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
-    private float speed = 8f;
+    [SerializeField] private float initialSpeed = 2f;
+    [SerializeField] private float speed = 2f;
+    [SerializeField] private float acceleration = .02f;
+    [SerializeField] private float maxSpeed = 10f;
     private float jumpingPower = 16f;
     private bool isFacingRight = true;
 
@@ -16,7 +19,10 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
-
+        if(horizontal == 0)
+        {
+            speed = initialSpeed;
+        }
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
@@ -32,6 +38,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(speed < maxSpeed)
+        {
+            speed += acceleration;
+        }
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
     }
 
@@ -51,3 +61,5 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 }
+
+
