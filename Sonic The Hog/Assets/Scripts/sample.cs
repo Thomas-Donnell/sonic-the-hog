@@ -13,6 +13,8 @@ public class sample : MonoBehaviour
         Debug.Log("Hello test");
         Debug.Log("Test2");
         Debug.Log("This is new");
+        Debug.Log("changing in JM");
+        Debug.Log("this is TCD/test");
     }
 
     // Update is called once per frame
