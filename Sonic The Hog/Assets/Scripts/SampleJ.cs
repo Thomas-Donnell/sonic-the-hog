@@ -10,6 +10,7 @@ public class SampleJ : MonoBehaviour
     void Start()
     {
         Debug.Log("boo");
+        Debug.Log("hello world");
     }
 
     // Update is called once per frame
