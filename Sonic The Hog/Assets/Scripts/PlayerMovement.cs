@@ -5,18 +5,32 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
-    private float speed = 8f;
     private float jumpingPower = 16f;
     private bool isFacingRight = true;
-
+    [SerializeField] private float initialSpeed = 2f;
+    [SerializeField] private float speed = 2f;
+    [SerializeField] private float acceleration = .02f;
+    [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Animator animator;
+
+    Subject subject;
+
+    void Start()
+    {
+        subject = new Subject();
+        new SceneObserver(subject);
+    }
 
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
-
+        if(horizontal == 0)
+        {
+            speed = initialSpeed;
+        }
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
@@ -32,7 +46,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(speed < maxSpeed)
+        {
+            speed += acceleration;
+        }
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+
+        animator.SetFloat("speed", speed);
     }
 
     private bool IsGrounded()
@@ -50,4 +70,17 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = localScale;
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "goal") {
+            subject.SetState("end");
+        }
+        else if (collision.gameObject.name == "floor")
+        {
+            subject.SetState("death");
+        }
+    }
 }
+
+
