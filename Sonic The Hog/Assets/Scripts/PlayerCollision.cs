@@ -6,21 +6,19 @@ public class PlayerCollision : MonoBehaviour
 {
     [SerializeField] private GameSceneManage gameSceneManage;
     [SerializeField] private SpriteRenderer spriteRenderer; // Assign this in the inspector.
+    [SerializeField] private BoxCollider2D boxCollider;
+    private bool invincible = false;
     [SerializeField] private float blinkTime = 1f;
     [SerializeField] private float blinkInterval = 0.1f;
 
-    void Start()
-    {
-        if (!spriteRenderer) spriteRenderer = GetComponent<SpriteRenderer>();
-        if (!gameSceneManage) gameSceneManage = FindObjectOfType<GameSceneManage>();
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            if (gameSceneManage != null)
+            if (gameSceneManage != null && !invincible)
             {
+                invincible= true;
+                boxCollider.enabled = false;
                 StartCoroutine(BlinkAndRestart(blinkTime, blinkInterval));
             }
             else
@@ -36,8 +34,7 @@ public class PlayerCollision : MonoBehaviour
         bool visible = true;
 
         // Disable the collider so the player doesn't trigger multiple collisions.
-        GetComponent<Collider2D>().enabled = false;
-
+        
         // Blinking effect
         while (time < duration)
         {
@@ -53,8 +50,7 @@ public class PlayerCollision : MonoBehaviour
 
         // Make sure the sprite is visible before restarting
         spriteRenderer.enabled = true;
-
-        // Restart the game
-        gameSceneManage.RestartGame();
+        invincible = false;
+        boxCollider.enabled = true;
     }
 }
