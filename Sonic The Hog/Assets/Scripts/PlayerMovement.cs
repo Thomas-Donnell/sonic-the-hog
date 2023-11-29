@@ -2,85 +2,90 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+namespace Scripts.PlayerMovement
 {
-    private float horizontal;
-    private float jumpingPower = 16f;
-    private bool isFacingRight = true;
-    [SerializeField] private float initialSpeed = 2f;
-    [SerializeField] private float speed = 2f;
-    [SerializeField] private float acceleration = .02f;
-    [SerializeField] private float maxSpeed = 10f;
-    [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private Animator animator;
-
-    Subject subject;
-
-    void Start()
+    public class PlayerMovement : MonoBehaviour
     {
-        subject = new Subject();
-        new SceneObserver(subject);
-    }
+        private float horizontal;
+        private float jumpingPower = 16f;
+        private bool isFacingRight = true;
+        [SerializeField] private float initialSpeed = 2f;
+        [SerializeField] private float speed = 2f;
+        [SerializeField] private float acceleration = .02f;
+        [SerializeField] private float maxSpeed = 10f;
+        [SerializeField] private Rigidbody2D rb;
+        [SerializeField] private Transform groundCheck;
+        [SerializeField] private LayerMask groundLayer;
+        [SerializeField] private Animator animator;
 
-    void Update()
-    {
-        horizontal = Input.GetAxisRaw("Horizontal");
-        if(horizontal == 0)
+        Subject subject;
+
+        void Start()
         {
-            speed = initialSpeed;
-        }
-        if (Input.GetButtonDown("Jump") && IsGrounded())
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            subject = new Subject();
+            new SceneObserver(subject);
         }
 
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+        void Update()
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            horizontal = Input.GetAxisRaw("Horizontal");
+            if (horizontal == 0)
+            {
+                speed = initialSpeed;
+            }
+            if (Input.GetButtonDown("Jump") && IsGrounded())
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            }
+
+            if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            }
+
+            Flip();
         }
 
-        Flip();
-    }
-
-    private void FixedUpdate()
-    {
-        if(speed < maxSpeed)
+        private void FixedUpdate()
         {
-            speed += acceleration;
+            if (speed < maxSpeed)
+            {
+                speed += acceleration;
+            }
+            rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+
+            animator.SetFloat("speed", speed);
         }
-        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
 
-        animator.SetFloat("speed", speed);
-    }
-
-    private bool IsGrounded()
-    {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
-    }
-
-    private void Flip()
-    {
-        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        private bool IsGrounded()
         {
-            isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
+            return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
         }
-    }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.name == "goal") {
-            subject.SetState("end");
-        }
-        else if (collision.gameObject.name == "floor")
+        private void Flip()
         {
-            subject.SetState("death");
+            if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+            {
+                isFacingRight = !isFacingRight;
+                Vector3 localScale = transform.localScale;
+                localScale.x *= -1f;
+                transform.localScale = localScale;
+            }
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.name == "goal")
+            {
+                subject.SetState("end");
+            }
+            else if (collision.gameObject.name == "floor")
+            {
+                subject.SetState("death");
+            }
         }
     }
 }
+
 
 
