@@ -4,26 +4,19 @@ using System.Collections;
 
 public class PlayerCollision : MonoBehaviour
 {
-    [SerializeField] private GameSceneManage gameSceneManage;
     [SerializeField] private SpriteRenderer spriteRenderer; // Assign this in the inspector.
-    [SerializeField] private BoxCollider2D boxCollider;
     private bool invincible = false;
     [SerializeField] private float blinkTime = 1f;
     [SerializeField] private float blinkInterval = 0.1f;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            if (gameSceneManage != null && !invincible)
+            if (!invincible)
             {
                 invincible= true;
-                boxCollider.enabled = false;
                 StartCoroutine(BlinkAndRestart(blinkTime, blinkInterval));
-            }
-            else
-            {
-                Debug.LogError("GameSceneManage is not assigned on " + gameObject.name);
             }
         }
     }
@@ -51,6 +44,5 @@ public class PlayerCollision : MonoBehaviour
         // Make sure the sprite is visible before restarting
         spriteRenderer.enabled = true;
         invincible = false;
-        boxCollider.enabled = true;
     }
 }

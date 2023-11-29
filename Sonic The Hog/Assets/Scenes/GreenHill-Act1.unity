@@ -2224,7 +2224,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 1152224127, guid: a359f8efecc26f24d9e5094249ec0952, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4444,7 +4444,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 1152224127, guid: a359f8efecc26f24d9e5094249ec0952, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4833,7 +4833,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 1152224127, guid: a359f8efecc26f24d9e5094249ec0952, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5810,7 +5810,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -590835000, guid: 82a395f0b984aec44be3c15dde4c938c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7523,7 +7523,6 @@ GameObject:
   - component: {fileID: 1182463654}
   - component: {fileID: 1182463653}
   - component: {fileID: 1182463655}
-  - component: {fileID: 1182463656}
   m_Layer: 0
   m_Name: sonic
   m_TagString: Player
@@ -7701,26 +7700,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e75177dadafcf724ba97ade01e9b94d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSceneManage: {fileID: 38934235}
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 1182463650}
   blinkTime: 1
   blinkInterval: 0.1
---- !u!58 &1182463656
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1182463648}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.018297076, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5055491
 --- !u!1 &1183315889
 GameObject:
   m_ObjectHideFlags: 0
@@ -11115,7 +11097,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -590835000, guid: 82a395f0b984aec44be3c15dde4c938c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
