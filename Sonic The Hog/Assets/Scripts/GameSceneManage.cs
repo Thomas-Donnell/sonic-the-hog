@@ -48,4 +48,10 @@ public class GameSceneManage : MonoBehaviour
        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 3);
       }
 
+      public void RestartGame()
+      {
+       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+      }
+
+
 }
