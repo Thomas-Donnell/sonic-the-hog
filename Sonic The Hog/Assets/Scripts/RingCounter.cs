@@ -8,10 +8,11 @@ public class RingCounter : MonoBehaviour
 {
     public static RingCounter instance;
     public TMP_Text ringText;
-    public int currentRings = 00;
+    public static int currentRings = 00;
 
     void Awake(){
       instance = this;
+        currentRings= 0;
     }
 
     void Start() {

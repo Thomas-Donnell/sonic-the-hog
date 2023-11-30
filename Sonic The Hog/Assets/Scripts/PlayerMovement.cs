@@ -71,16 +71,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "goal") {
+        if (collision.gameObject.CompareTag("Goal")) {
             subject.SetState("end");
+            Debug.Log("hello");
         }
         else if (collision.gameObject.name == "floor")
         {
             subject.SetState("death");
         }
-    }
+    }*/
 }
 
 

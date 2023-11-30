@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private int currentLives;
 
     public TMP_Text livesText;
+    public GameSceneManage sceneManage;
 
     void Start()
     {
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
         if (currentLives <= 0)
         {
             // Game Over logic, reset level or handle game over state
-            Debug.Log("Game Over");
+            sceneManage.EndScreen();
         }
     }
 
