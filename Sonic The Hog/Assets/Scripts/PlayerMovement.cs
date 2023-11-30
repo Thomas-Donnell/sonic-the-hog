@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -7,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal;
     private float jumpingPower = 16f;
     private bool isFacingRight = true;
+    private bool allowMovement = true;
     [SerializeField] private float initialSpeed = 2f;
     [SerializeField] private float speed = 2f;
     [SerializeField] private float acceleration = .02f;
@@ -16,21 +15,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Animator animator;
 
-    Subject subject;
-
-    void Start()
-    {
-        subject = new Subject();
-        new SceneObserver(subject);
-    }
-
     void Update()
     {
+        if (!allowMovement) return;
+
         horizontal = Input.GetAxisRaw("Horizontal");
-        if(horizontal == 0)
+        if (horizontal == 0)
         {
             speed = initialSpeed;
         }
+
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
@@ -46,13 +40,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(speed < maxSpeed)
+        if (!allowMovement) return;
+
+        if (speed < maxSpeed)
         {
             speed += acceleration;
         }
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
 
-        animator.SetFloat("speed", speed);
+        animator.SetFloat("speed", Mathf.Abs(speed));
     }
 
     private bool IsGrounded()
@@ -71,16 +67,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void DisableMovementTemporarily(float duration)
     {
-        if (collision.gameObject.name == "goal") {
-            subject.SetState("end");
-        }
-        else if (collision.gameObject.name == "floor")
-        {
-            subject.SetState("death");
-        }
+        allowMovement = false;
+        Invoke("EnableMovement", duration);
+    }
+
+    private void EnableMovement()
+    {
+        allowMovement = true;
     }
 }
-
-

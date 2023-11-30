@@ -1,12 +1,9 @@
-using System.Collections;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
     public float speed = 2f;
     public float distance = 5f;
-    public float pauseDuration = 2f;
-
     private Vector3 startPos;
     private Vector3 endPos;
     private bool movingToStart = false;
@@ -14,26 +11,23 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         startPos = transform.position;
-        endPos = new Vector3(startPos.x + distance, startPos.y, startPos.z);
-        StartCoroutine(MoveBackAndForth());
+        endPos = startPos + new Vector3(distance, 0, 0);
     }
 
-    IEnumerator MoveBackAndForth()
+    void Update()
     {
-        while (true)
-        {
-            // Move towards the target
-            Vector3 target = movingToStart ? startPos : endPos;
-            transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        MoveEnemy();
+    }
 
-            // Check if we reached the target
-            if (transform.position == target)
-            {
-                // Wait for a bit before moving in the opposite direction
-                movingToStart = !movingToStart;
-                yield return new WaitForSeconds(pauseDuration);
-            }
-            yield return null;
+    public void MoveEnemy()
+    {
+        Vector3 target = movingToStart ? startPos : endPos;
+        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+
+        if (Vector3.Distance(transform.position, target) < 0.001f)
+        {
+            movingToStart = !movingToStart;
+            endPos = new Vector3(startPos.x + (movingToStart ? -distance : distance), startPos.y, startPos.z);
         }
     }
 }

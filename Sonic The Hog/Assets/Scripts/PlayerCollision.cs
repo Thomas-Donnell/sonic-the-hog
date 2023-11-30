@@ -1,48 +1,84 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerCollision : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer spriteRenderer; // Assign this in the inspector.
-    private bool invincible = false;
+    [SerializeField] private GameSceneManage gameSceneManage;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private float blinkTime = 1f;
     [SerializeField] private float blinkInterval = 0.1f;
+    [SerializeField] private float bounceForce = 5f; // Force for bouncing back
+    private bool isBlinking = false;
+    private int collisionCount = 0; // Track the number of collisions with enemies
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void Start()
+    {
+        if (!spriteRenderer) spriteRenderer = GetComponent<SpriteRenderer>();
+        if (!gameSceneManage) gameSceneManage = FindObjectOfType<GameSceneManage>();
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            if (!invincible)
+            if (!isBlinking)
             {
-                invincible= true;
-                StartCoroutine(BlinkAndRestart(blinkTime, blinkInterval));
+                collisionCount++;
+                BounceBack(collision);
+                StartCoroutine(Blink(blinkTime, blinkInterval));
+
+                if (collisionCount >= 2) // Check if Sonic hit an enemy twice
+                {
+                    DieAndRestart();
+                }
             }
         }
     }
 
-    private IEnumerator BlinkAndRestart(float duration, float interval)
+    private void BounceBack(Collision2D collision)
     {
+        if (collision.contactCount > 0)
+        {
+            Vector2 collisionNormal = collision.contacts[0].normal;
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                // Apply a more pronounced upward force
+                Vector2 bounceDirection = new Vector2(-collisionNormal.x, 1).normalized;
+                rb.AddForce(bounceDirection * bounceForce, ForceMode2D.Impulse);
+            }
+
+            // Temporarily disable player movement
+            PlayerMovement playerMovement = GetComponent<PlayerMovement>();
+            if (playerMovement != null)
+            {
+                playerMovement.DisableMovementTemporarily(0.5f); // Disable for 0.5 second
+            }
+        }
+    }
+
+
+    private IEnumerator Blink(float duration, float interval)
+    {
+        isBlinking = true;
         float time = 0;
         bool visible = true;
 
-        // Disable the collider so the player doesn't trigger multiple collisions.
-        
-        // Blinking effect
         while (time < duration)
         {
-            // Toggle visibility
             spriteRenderer.enabled = visible;
             visible = !visible;
-
-            // Wait for a bit before the next toggle
             yield return new WaitForSeconds(interval);
-
             time += interval;
         }
 
-        // Make sure the sprite is visible before restarting
         spriteRenderer.enabled = true;
-        invincible = false;
+        isBlinking = false;
+    }
+
+    private void DieAndRestart()
+    {
+        // Logic to handle Sonic's death and restart the level
+        gameSceneManage.RestartGame(); // Assuming RestartGame() is defined in GameSceneManage
     }
 }

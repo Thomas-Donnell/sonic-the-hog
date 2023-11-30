@@ -2119,7 +2119,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 381606437}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -2146,7 +2146,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   distance: 1.5
-  pauseDuration: 2
 --- !u!893571522 &381606441
 CustomCollider2D:
   m_ObjectHideFlags: 0
@@ -4377,6 +4376,7 @@ GameObject:
   - component: {fileID: 727343965}
   - component: {fileID: 727343966}
   - component: {fileID: 727343967}
+  - component: {fileID: 727343968}
   m_Layer: 0
   m_Name: Crab
   m_TagString: Enemy
@@ -4502,7 +4502,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   distance: 2
-  pauseDuration: 2
 --- !u!50 &727343966
 Rigidbody2D:
   serializedVersion: 4
@@ -4511,7 +4510,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727343960}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -4550,6 +4549,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.94, y: 1.71}
   m_EdgeRadius: 0
+--- !u!58 &727343968
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727343960}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0000011920929, y: 0.00000047683716}
+  serializedVersion: 2
+  m_Radius: 0.97
 --- !u!1 &740627702
 GameObject:
   m_ObjectHideFlags: 0
@@ -4728,7 +4743,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 778130219}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -4755,7 +4770,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   distance: 1.2
-  pauseDuration: 2
 --- !u!893571522 &778130223
 CustomCollider2D:
   m_ObjectHideFlags: 0
@@ -5705,7 +5719,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 925906068}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -5732,7 +5746,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   distance: 1.5
-  pauseDuration: 2
 --- !u!893571522 &925906072
 CustomCollider2D:
   m_ObjectHideFlags: 0
@@ -7523,6 +7536,7 @@ GameObject:
   - component: {fileID: 1182463654}
   - component: {fileID: 1182463653}
   - component: {fileID: 1182463655}
+  - component: {fileID: 1182463656}
   m_Layer: 0
   m_Name: sonic
   m_TagString: Player
@@ -7700,9 +7714,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e75177dadafcf724ba97ade01e9b94d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameSceneManage: {fileID: 0}
   spriteRenderer: {fileID: 1182463650}
   blinkTime: 1
   blinkInterval: 0.1
+  bounceForce: 15
+--- !u!58 &1182463656
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182463648}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0047905445, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5452678
 --- !u!1 &1183315889
 GameObject:
   m_ObjectHideFlags: 0
@@ -10992,7 +11024,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1942695329}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -11019,7 +11051,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   distance: 1.5
-  pauseDuration: 2
 --- !u!893571522 &1942695333
 CustomCollider2D:
   m_ObjectHideFlags: 0
