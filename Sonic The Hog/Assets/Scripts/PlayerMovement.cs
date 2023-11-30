@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal;
     private float jumpingPower = 16f;
     private bool isFacingRight = true;
+    public static bool isGrounded = true;
     [SerializeField] private float initialSpeed = 2f;
     [SerializeField] private float speed = 2f;
     [SerializeField] private float acceleration = .02f;
@@ -52,7 +53,10 @@ public class PlayerMovement : MonoBehaviour
         }
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
 
+        isGrounded = IsGrounded();
         animator.SetFloat("speed", speed);
+        animator.SetBool("grounded", isGrounded);
+        
     }
 
     private bool IsGrounded()
@@ -70,18 +74,6 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = localScale;
         }
     }
-
-    /*private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Goal")) {
-            subject.SetState("end");
-            Debug.Log("hello");
-        }
-        else if (collision.gameObject.name == "floor")
-        {
-            subject.SetState("death");
-        }
-    }*/
 }
 
 

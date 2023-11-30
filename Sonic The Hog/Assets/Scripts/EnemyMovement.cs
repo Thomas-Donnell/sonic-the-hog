@@ -6,16 +6,28 @@ public class EnemyMovement : MonoBehaviour
     public float speed = 2f;
     public float distance = 5f;
     public float pauseDuration = 2f;
+    [SerializeField] private Animator animator;
 
     private Vector3 startPos;
     private Vector3 endPos;
     private bool movingToStart = false;
+    private Coroutine movement;
 
     void Start()
     {
         startPos = transform.position;
         endPos = new Vector3(startPos.x + distance, startPos.y, startPos.z);
-        StartCoroutine(MoveBackAndForth());
+
+        movement = StartCoroutine(MoveBackAndForth());
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && !PlayerMovement.isGrounded)
+        {
+            StopCoroutine(movement);
+            StartCoroutine(DestroyAfterDelay());
+        }
     }
 
     IEnumerator MoveBackAndForth()
@@ -35,5 +47,15 @@ public class EnemyMovement : MonoBehaviour
             }
             yield return null;
         }
+    }
+
+    private IEnumerator DestroyAfterDelay()
+    {
+        // Wait for 2 seconds before destroying the GameObject
+        animator.SetBool("destroyed", true);
+        yield return new WaitForSeconds(.3f);
+
+        // Your destruction logic here
+        Destroy(gameObject);
     }
 }
