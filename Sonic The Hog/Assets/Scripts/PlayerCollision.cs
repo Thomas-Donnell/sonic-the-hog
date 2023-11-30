@@ -11,14 +11,36 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") && PlayerMovement.isGrounded)
         {
             if (!invincible)
             {
                 invincible= true;
                 GameManager.instance.LoseLife();
+                BounceBack(collision);
                 StartCoroutine(BlinkAndRestart(blinkTime, blinkInterval));
             }
+        }
+        else if (collision.gameObject.CompareTag("Enemy") && !PlayerMovement.isGrounded)
+        {
+            BounceBack(collision);
+            
+        }
+    }
+
+    private void BounceBack(Collision2D collision)
+    {
+        if (collision.contactCount > 0)
+        {
+            Vector2 collisionNormal = collision.contacts[0].normal;
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                // Apply a more pronounced upward force
+                Vector2 bounceDirection = new Vector2(-collisionNormal.x, 1).normalized;
+                rb.AddForce(bounceDirection * 20, ForceMode2D.Impulse);
+            }
+
         }
     }
 

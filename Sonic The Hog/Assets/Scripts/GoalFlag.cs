@@ -14,7 +14,14 @@ public class GoalFlag : MonoBehaviour
         if(collision.gameObject.name == "sonic")
         {
             animator.Play();
-            sceneManage.EndScreen();
+            StartCoroutine(delay());
         }
+    }
+
+    private IEnumerator delay()
+    {
+        // Wait for 2 seconds before destroying the GameObject
+        yield return new WaitForSeconds(2f);
+        sceneManage.EndScreen();
     }
 }

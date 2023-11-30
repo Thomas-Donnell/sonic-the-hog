@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameSceneManage : MonoBehaviour
 {
 
-    int levelOne = 0;
-    int splashScreen = 1;
-    int loginScreen = 2;
-    int endScreen = 3;
-    int registerScreen = 4;
+    int levelOne = 4;
+    int splashScreen = 0;
+    int loginScreen = 1;
+    int endScreen = 2;
+    int registerScreen = 3;
       // Player is on SplashScreen. Player pushes 'login' button and redirected to LoginScreen
     public void LoginGame()
     {
@@ -21,7 +21,7 @@ public class GameSceneManage : MonoBehaviour
     //Player is on LoginScreen. If player sucessfully logins in, clicks on 'Play!' button then they are redirected to Sample(Game) Screen
     public void PlayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+        SceneManager.LoadScene(levelOne);
     }
 
 
