@@ -7,7 +7,7 @@ public class TimerController : MonoBehaviour
 {
     public TMP_Text timerText; // Reference to the Text UI element
     public float startTime = 0f; // Initial time for the timer
-    private float currentTime = 0f;
+    public static float currentTime = 0f;
     private bool isRunning = true;
 
     void Start()

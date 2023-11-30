@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PlayerCollision : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer spriteRenderer; // Assign this in the inspector.
+    [SerializeField] private SpriteRenderer spriteRenderer;
     private bool invincible = false;
     [SerializeField] private float blinkTime = 1f;
     [SerializeField] private float blinkInterval = 0.1f;
@@ -16,6 +16,7 @@ public class PlayerCollision : MonoBehaviour
             if (!invincible)
             {
                 invincible= true;
+                GameManager.instance.LoseLife();
                 StartCoroutine(BlinkAndRestart(blinkTime, blinkInterval));
             }
         }
