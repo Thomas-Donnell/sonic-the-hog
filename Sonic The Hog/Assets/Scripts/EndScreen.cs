@@ -14,7 +14,7 @@ public class EndScreen : MonoBehaviour
         rings = RingCounter.currentRings;
         time = TimerController.currentTime;
         ringsText.text = "Rings: " + rings;
-        timeText.text = "Time: " + MathF.Round(time,2);
+        timeText.text = "Time: " + MathF.Round(time,2) + "s";
     }
 
 }
